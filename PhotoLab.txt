@@ -1,0 +1,28 @@
+PhotoLab Lab 4 Documentation of Implementations
+
+Image.c :
+
+In this lab, I defined the functions that defined behavior corresponding to the Image structure to create the foundation of pointer functionality in this lab. I defined functions to Get and Set a single pixel for each color channel R, G, and B, as well as dynamically allocate memory for a new image with malloc() and free that memory with free().  
+
+
+In this lab we were tasked with defining and implementing the following DIPs: 
+
+/* Crop */
+Image *Crop(Image *image, int x, int y, int W, int H);
+Crop takes an original image, user specified crop dimensions, and starting point pixels. Crop returns the cropped image. I defined this function by first calculating the width and heights corresponding to the original image indexes of which to iterate over. I then iterated over these bounds and translated the corresponding pixels from the original image to the cropped image. 
+
+/* Resize */
+Image *Resize(Image *image, int newWidth, int newHeight);
+Resize zooms an image larger or smaller: resizing the image. First I calculate the scale of the image by calculating the ratio between the new user specified width and height dimensions and the original image's width and height dimensions. Then I iterate over the dimensions of the output image and copy over the corresponding pixel from the orignal image to the resized image. 
+
+/* Watermark */
+Image *Watermark(Image *image, const Image *watermark_image);
+The tricky part about implementing Watermark() was realizing that the watermark is a different size image than the other images. Then, to place the watermark over the orignal image with wrapping or repetiton, I have to calculate the pixel that the current index corresponds to on the watermark mask by taking the remainder of my current index with the mask dimensions. The watermark is traced out with black pixels on the watermark image, so I find where these mask pixels are, then multiply my original image pixels at those locations by a factor to create my watermark highlight. 
+
+/* Rotate by 90 */
+Image *RotateBy90(Image *image, int rotateDirection);
+You can either rotate an image once clockwise or counterclockwise. Rotating clockwise is done by first creating a new image with inverted width/ height dimesnions, then translating the corresponding pixel from the orignal image to the new rotated image. For clockwise rotation, the original image's (x,y) becomes the pixel at the translated image's (height-y-1, x). For counterclockwise rotation, the original image's (x,y) becomes the pixel at the translated image's (y, width-x-1).
+
+Then, I translated DIP functions from previous labs into this lab, retaining the same functionality but using pointers to drive the program logic, instead of static arrays. The main part of executing this successfully was replacing setting RGB values with my set functions, and replacing RGB accessing with my getter functions. 
+
+Lastly, I updated my Makefile from the previous lab to compile and link the new program files for Image.c and Test.c, and updated my main program logic in PhotoLab.c to handle menu function logic and main control with pointers instead of static arrays. 
