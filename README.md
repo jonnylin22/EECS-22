@@ -1,1 +1,1 @@
-EECS 22 C projects
+EECS 22 C programming projects
